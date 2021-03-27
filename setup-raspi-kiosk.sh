@@ -48,6 +48,8 @@ echo "STATUS: making hdmi-scripts executable"
 sudo chmod a+x /home/pi/hdmipoweron.sh
 sudo chmod a+x /home/pi/hdmipoweroff.sh
 
+echo "INFO: This will override all existing entries in /etc/xdg/lxsession/LXDE-pi/autostart"
+read -p "Press enter to continue or CTRL+C to cancel"
 
 #create autostart file for chromium kiosk mode on startup
 echo "# autostart script 
@@ -63,7 +65,6 @@ point-rpi
 @unclutter
 
 # turn off screensaver
-#@xscreensaver -no-splash
 @xset s off
 @xset -dpms
 @xset s noblank
