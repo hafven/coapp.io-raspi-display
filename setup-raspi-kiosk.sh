@@ -1,52 +1,50 @@
 #!/bin/bash
-#use color to highlight status logs
-RED='\033[0;33m'
-BLUE='\033[0;34m'
-NC='\033[0m' # No Color
 #check if script was run as root
 if (( $EUID != 0 )); then
-    echo "${RED}Please run as root!${NC}"
+    echo "Please run as root!"
     exit
 fi
-echo "${BLUE}Please provide your space URL. Your domain should look like this:
-> \"https://yourname.collaborates.io\"${NC}"
+echo "Please provide your space URL. Your domain should look like this:
+> \"https://yourname.collaborates.io\""
 read domain
-echo "${BLUE}checking whether the domain exists ...${NC}"
+echo "--------------------------------------"
+echo "checking whether the domain exists ..."
 curl -s --head $domain | head -n 1 | grep "HTTP/1.[01] [23].." > /dev/null
 # on success (page exists), $? will be 0; on failure (page does not exist or
 # is unreachable), $? will be 1
 if [[ $? -eq 0 ]]; then
-    echo "${RED}ERROR: Could not connect to '$domain'. Please check that you have spelled the url correctly and that this device is connected to the internet.${NC}"
+    echo "ERROR: Could not connect to '$domain'. Please check that you have spelled the url correctly and that this device is connected to the internet."
     exit 0
 else
-    echo "${BLUE}SUCCESS: Cool! $domain is up and running!"
+    echo "SUCCESS: Cool! $domain is up and running!"
 fi
-echo "Please provide your access token (hash string)${NC}"
+echo "--------------------------------------"
+echo "Please provide your access token (hash string)"
 read token
 
 #Install packages
-echo "${BLUE}STATUS: updating apt ...${NC}"
+echo "STATUS: updating apt ..."
 sudo apt update
-echo "${BLUE}STATUS: installing the unclutter package ...${NC}"
+echo "STATUS: installing the unclutter package ..."
 sudo apt install unclutter
-echo "${BLUE}STATUS: installing the cec-utils package ...${NC}"
+echo "STATUS: installing the cec-utils package ..."
 sudo apt install cec-utils
 
 #create hdmi scripts
 
 #power on
-echo "${BLUE}STATUS: creating script /home/pi/hdmipoweron.sh${NC}"
+echo "STATUS: creating script /home/pi/hdmipoweron.sh"
 echo "# power on HDMI on HDMI 1 port
 echo 'on 0.0.0.0' | cec-client -s -d 1
 # use HDMI adapter as active source
 echo 'as' | cec-client -s -d 1" > /home/pi/hdmipoweron.sh
 #power off 
-echo "${BLUE}STATUS: creating script /home/pi/hdmipoweron.sh${NC}"
+echo "STATUS: creating script /home/pi/hdmipoweron.sh"
 echo "#power off hdmi device on HDMI 1 port
 echo 'standby 0.0.0.0' | cec-client -s -d 1" > /home/pi/hdmipoweroff.sh
 
 #make the scripts executable
-echo "${BLUE}STATUS: making hdmi-scripts executable${NC}"
+echo "STATUS: making hdmi-scripts executable"
 sudo chmod a+x /home/pi/hdmipoweron.sh
 sudo chmod a+x /home/pi/hdmipoweroff.sh
 
@@ -73,7 +71,7 @@ point-rpi
 # start chromium in kiosk mode an navigate to your collaboates.io url
 @chromium-browser --noerrdialogs --incognito --disable-crash-reporter --disable-infobars --force-device-scale-factor=1.00 --kiosk $domain/public/screen/$token/nordstadt/event/" > /etc/xdg/lxsession/LXDE-pi/autostart
 
-echo "${BLUE}STATUS: creating entries in crontab${NC}"
+echo "STATUS: creating entries in crontab"
 #add scheduler to crontab to automatically turn of connected display to given time
 ## turn on hdmi connected device on boot
 (crontab -l 2>/dev/null; echo "@reboot /home/pi/hdmipoweron.sh") | crontab -
@@ -82,8 +80,8 @@ echo "${BLUE}STATUS: creating entries in crontab${NC}"
 (crontab -l 2>/dev/null; echo "# Edit the following line to controll when to wake up the display. See https://crontab.guru/ for syntax") | crontab -
 (crontab -l 2>/dev/null; echo "0 8 * * * sudo reboot") | crontab -
 
-echo "${BLUE}INFO: All entries created."
+echo "INFO: All entries created."
 echo "Your HDMI-Display connected to HDMI Port 1 will be automatically switched on at 8:00h daily"
 echo "Your HDMI-Display connected to HDMI Port 1 will be automtically switched off at 20:00h daily"
-echo "To change the cron-job configuration run terminal command 'crontab -e'${NC}"
+echo "To change the cron-job configuration run comman 'crontab -e'"
 exit 1
