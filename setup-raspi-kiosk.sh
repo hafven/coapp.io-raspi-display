@@ -19,8 +19,6 @@ else
     echo "SUCCESS: Cool! $domain is up and running!"
 fi
 echo "--------------------------------------"
-echo "Please provide your access token (hash string)"
-read token
 
 #Install packages
 echo "STATUS: updating apt ..."
@@ -72,7 +70,7 @@ point-rpi
 @xset s noblank
 
 # start chromium in kiosk mode an navigate to your collaboates.io url
-@chromium-browser --noerrdialogs --incognito --disable-crash-reporter --disable-infobars --force-device-scale-factor=1.00 --kiosk $domain/public/screen/$token/nordstadt/event/" > /etc/xdg/lxsession/LXDE-pi/autostart
+@chromium-browser --noerrdialogs --incognito --disable-crash-reporter --disable-infobars --force-device-scale-factor=1.00 --kiosk $domain" > /etc/xdg/lxsession/LXDE-pi/autostart
 
 echo "STATUS: creating entries in crontab"
 #add scheduler to crontab to automatically turn of connected display to given time
