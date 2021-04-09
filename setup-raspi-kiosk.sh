@@ -39,7 +39,7 @@ echo 'on 0.0.0.0' | cec-client -s -d 1
 # use HDMI adapter as active source
 echo 'as' | cec-client -s -d 1" > /home/pi/hdmipoweron.sh
 #power off 
-echo "STATUS: creating script /home/pi/hdmipoweron.sh"
+echo "STATUS: creating script /home/pi/hdmipoweroff.sh"
 echo "#power off hdmi device on HDMI 1 port
 vcgencmd display_power 0
 # use cec for connected TVs 
