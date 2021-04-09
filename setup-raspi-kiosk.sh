@@ -33,12 +33,16 @@ sudo apt install cec-utils
 #power on
 echo "STATUS: creating script /home/pi/hdmipoweron.sh"
 echo "# power on HDMI on HDMI 1 port
+vcgencmd display_power 1
+# use cec for connected TVs 
 echo 'on 0.0.0.0' | cec-client -s -d 1
 # use HDMI adapter as active source
 echo 'as' | cec-client -s -d 1" > /home/pi/hdmipoweron.sh
 #power off 
 echo "STATUS: creating script /home/pi/hdmipoweron.sh"
 echo "#power off hdmi device on HDMI 1 port
+vcgencmd display_power 0
+# use cec for connected TVs 
 echo 'standby 0.0.0.0' | cec-client -s -d 1" > /home/pi/hdmipoweroff.sh
 
 #make the scripts executable
