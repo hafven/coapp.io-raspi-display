@@ -1,4 +1,4 @@
-# raspi-collaborates-display
+# coapp.io-raspi-display
 Bash Script to setup RaspberryPi as Controller for an HDMI-Connected Display in kiosk browser mode
 ## Setup using SSH
 Guide for Raspberry Pi 4 Model B running on Raspberry Pi OS with the default configuration including Raspberry Pi Desktop and given that you already can establish an SSH-connection.
@@ -14,13 +14,13 @@ If you need to reset to *factory defaults* use the [Raspberry Pi Imager](https:/
 1. once your ssh connection is established change the default password by using the configuration wizard `sudo raspi-config` > `System Options` > `Password`
 1. download the setup script to your raspi and save it in your home directory in the file `~/setup-raspi-kiosk.sh`
     ```
-    curl https://raw.githubusercontent.com/hafven/raspi-collaborates-display/main/setup-raspi-kiosk.sh > ~/setup-raspi-kiosk.sh
+    curl https://raw.githubusercontent.com/hafven/coapp.io-raspi-display/main/setup-raspi-kiosk.sh > ~/setup-raspi-kiosk.sh
     ```
 1. run the bash script you just downloaded as root and provide the input when asked
     ```
     sudo bash ~/setup-raspi-kiosk.sh
     ```
-1. if no errors occured your raspi is now ready to serve as collaborates community display controller and show live information from your community in your spaces. After reboot it will display this in full screen (kiosk mode). By default your display will be automatically switched off (standby) at 8pm local time daily and switched on (if they are still in standby) at 8am daily, and whenever the raspi is rebooted. Confirm that it's working by rebooting the raspi through running the following command.
+1. if no errors occured your raspi is now ready to serve as [coapp.io](https://www.coapp.io/) community display and show live information from your community in your spaces. After reboot it will display this in full screen (kiosk mode). By default your display will be automatically switched off (standby) at 8pm local time daily and switched on (if they are still in standby) at 8am daily, and whenever the raspi is rebooted. Confirm that it's working by rebooting the raspi through running the following command.
     ```
     sudo reboot
     ```
